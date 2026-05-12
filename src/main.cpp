@@ -10,11 +10,28 @@ int main() {
 
     u.print_info();
 
-    u(2, 1) = 3.16;
+    // Initializing
+    for (int j = 0; j < u.ny(); ++j) {
+        for (int i = 0; i < u.nx(); ++i) {
+            u(i, j) = 0.0;
+        }
+    }
 
-    std::cout << "u(2, 1) = "
-              << u(2,1)
-              << std::endl;
+    // Setting boundaries
+    for (int i = 0; i < u.nx(); ++i) {
+        u(i, u.ny() - 1) = 1.0;
+    }
+
+    for (int j = 0; j < u.ny(); ++j) {
+        for (int i = 0; i < u.nx(); ++i) {
+            std::cout << u(i, j) << " ";
+        }
+        std::cout << std::endl;
+    }
+
+    // std::cout << "u(2, 1) = "
+    //           << u(2,1)
+    //           << std::endl;
 
     run_poisson_solver();
 

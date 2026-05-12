@@ -18,3 +18,13 @@ void Grid::print_info() const
               << nx_ << " x " << ny_
               << std::endl;
 }
+
+int Grid::nx() const
+{
+    return nx_;
+}
+
+int Grid::ny() const
+{
+    return ny_;
+}

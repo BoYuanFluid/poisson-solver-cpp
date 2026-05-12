@@ -10,6 +10,9 @@ public:
 
     void print_info() const;
 
+    int nx() const;
+    int ny() const;
+
 private:
     int nx_;
     int ny_;
