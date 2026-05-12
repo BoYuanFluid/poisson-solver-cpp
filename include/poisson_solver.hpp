@@ -1,3 +1,5 @@
 #pragma once
 
-void run_poisson_solver();
+#include "grid.hpp"
+
+void run_poisson_solver(Grid& u);

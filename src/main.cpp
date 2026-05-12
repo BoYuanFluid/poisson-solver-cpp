@@ -33,7 +33,16 @@ int main() {
     //           << u(2,1)
     //           << std::endl;
 
-    run_poisson_solver();
+    run_poisson_solver(u);
+
+    std::cout << std::endl;
+    std::cout << "Final solution: " << std::endl;
+    for (int j = 0; j < u.ny(); ++j) {
+        for (int i = 0; i < u.nx(); ++i) {
+            std::cout << u(i, j) << " ";
+        }
+        std::cout << std::endl;
+    }
 
     return 0;
 }
