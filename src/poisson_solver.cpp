@@ -31,15 +31,7 @@ void run_poisson_solver(Grid& u) {
             }
         }
 
-        double max_residual = 0.0;
-
-        for (int j = 1; j < u.ny() - 1; ++j) {
-            for (int i = 1; i < u.nx() - 1; ++i) {
-                double res = u(i+1, j) + u(i-1, j) + u(i, j+1) + u(i, j-1) - 4.0 * u(i, j);
-                max_residual = std::max(max_residual, std::abs(res));
-            }
-        }
-
+        double max_residual = compute_max_residual(u);
 
         if ((iter + 1) % 10 == 0 || max_change < tolerance) {
             std::cout << "Iteration " << iter + 1 << ", max change = " << max_change << ", max residual = " << max_residual << std::endl;
@@ -59,3 +51,17 @@ void run_poisson_solver(Grid& u) {
 }
 
     
+double compute_max_residual(const Grid& u) {
+
+    double max_residual = 0.0;
+
+    for (int j = 1; j < u.ny() - 1; ++j) {
+            for (int i = 1; i < u.nx() - 1; ++i) {
+                double res = u(i+1, j) + u(i-1, j) + u(i, j+1) + u(i, j-1) - 4.0 * u(i, j);
+                max_residual = std::max(max_residual, std::abs(res));
+            }
+        }
+
+    return max_residual;
+
+}

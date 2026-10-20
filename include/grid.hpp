@@ -7,6 +7,7 @@ public:
     Grid(int nx, int ny);
 
     double& operator()(int i, int j);
+    const double& operator()(int i, int j) const;
 
     void print_info() const;
 

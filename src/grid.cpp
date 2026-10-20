@@ -12,6 +12,11 @@ double& Grid::operator()(int i, int j)
     return data_[j * nx_ + i];
 }
 
+const double& Grid::operator()(int i, int j) const 
+{
+    return data_[j * nx_ + i];
+}
+
 void Grid::print_info() const
 {
     std::cout << "Grid size: "
