@@ -7,6 +7,23 @@
 #include "grid.hpp"
 #include "poisson_solver.hpp"
 
+double compute_max_error(const Grid& u, double h) {
+
+    const double pi = std::acos(-1.0);
+    double max_error = 0.0;
+
+    for (int j = 0; j < u.ny(); ++j) {
+        for (int i = 0; i < u.nx(); ++i) {
+            double x = i * h;
+            double y = j * h;
+            double u_exact = std::sin(pi * x) * std::sin(pi * y);
+            double error = std::abs(u(i, j) - u_exact);
+            max_error = std::max(max_error, error);
+        }
+    }
+    return max_error;
+}
+
 int main() {
 
     std::cout << std::scientific << std::setprecision(12);
@@ -62,6 +79,10 @@ int main() {
     //           << std::endl;
 
     run_poisson_solver(u, f, h);
+
+    double error = compute_max_error(u, h);
+
+    std::cout << "Maximum error = " << error << '\n';
 
     std::cout << std::endl;
     // std::cout << "Final solution: " << std::endl;
