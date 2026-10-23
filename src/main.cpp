@@ -46,26 +46,47 @@ int main() {
     //     u(i, u.ny() - 1) = 1.0;
     // }
 
-    const int n = 33;
-    const double h = 1.0 / (n - 1);
-
     const double pi = std::acos(-1.0);
+    const int grid_sizes[] = {9, 17, 33};
 
-    Grid u(n, n);
-    Grid f(n ,n);
+    for (int n : grid_sizes) {
+        const double h = 1.0 / (n - 1);
+        Grid u(n, n);
+        Grid f(n ,n);
 
-    for (int j = 0; j < n; ++j) {
-        for (int i = 0; i < n; ++i) {
-             double x = i * h;
-             double y = j * h;
+        for (int j = 0; j < n; ++j) {
+            for (int i = 0; i < n; ++i) {
+                double x = i * h;
+                double y = j * h;
 
-            //  Initial conditions and boundary values
-            u(i ,j) = 0.0;
+                //  Initial conditions and boundary values
+                u(i ,j) = 0.0;
 
-            // Source term
-            f(i, j) = 2.0 * pi * pi * std::sin(pi * x) * std::sin(pi * y);
+                // Source term
+                f(i, j) = 2.0 * pi * pi * std::sin(pi * x) * std::sin(pi * y);
+            }
         }
+        run_poisson_solver(u, f, h);
+
+        std::cout << "Grid: " << n << " x " << n << '\n';
+        
+        double error = compute_max_error(u, h);
+
+        std::cout << "Maximum error = " << error << '\n';
+
+        std::cout << std::endl;
+
+        std::cout << "Centre value: " << u(n / 2, n / 2) << '\n';
+
     }
+    
+
+    
+    
+
+    
+
+    
 
     // for (int j = 0; j < u.ny(); ++j) {
     //     for (int i = 0; i < u.nx(); ++i) {
@@ -78,13 +99,9 @@ int main() {
     //           << u(2,1)
     //           << std::endl;
 
-    run_poisson_solver(u, f, h);
+    
 
-    double error = compute_max_error(u, h);
-
-    std::cout << "Maximum error = " << error << '\n';
-
-    std::cout << std::endl;
+    
     // std::cout << "Final solution: " << std::endl;
     // for (int j = 0; j < u.ny(); ++j) {
     //     for (int i = 0; i < u.nx(); ++i) {
@@ -93,7 +110,7 @@ int main() {
     //     std::cout << std::endl;
     // }
 
-    std::cout << "Centre value: " << u(n / 2, n / 2) << '\n';
+    
 
     return 0;
 }

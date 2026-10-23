@@ -33,9 +33,9 @@ void run_poisson_solver(Grid& u, const Grid& f, double h) {
 
         double max_residual = compute_max_residual(u, f, h);
 
-        if ((iter + 1) % 100 == 0 || max_change < tolerance) {
-            std::cout << "Iteration " << iter + 1 << ", max change = " << max_change << ", max residual = " << max_residual << std::endl;
-        }
+        // if ((iter + 1) % 100 == 0 || max_change < tolerance) {
+        //     std::cout << "Iteration " << iter + 1 << ", max change = " << max_change << ", max residual = " << max_residual << std::endl;
+        // }
 
         if (max_residual < tolerance) {
 
