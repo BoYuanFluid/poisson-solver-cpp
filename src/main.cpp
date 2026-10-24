@@ -1,6 +1,6 @@
 #include <iostream>
 #include <cmath>
-
+#include <vector>
 #include <iomanip>
 #include <algorithm>
 
@@ -49,6 +49,8 @@ int main() {
     const double pi = std::acos(-1.0);
     const int grid_sizes[] = {9, 17, 33};
 
+    std::vector<double> errors;
+
     for (int n : grid_sizes) {
         const double h = 1.0 / (n - 1);
         Grid u(n, n);
@@ -69,8 +71,10 @@ int main() {
         run_poisson_solver(u, f, h);
 
         std::cout << "Grid: " << n << " x " << n << '\n';
-        
+
         double error = compute_max_error(u, h);
+
+        errors.push_back(error);
 
         std::cout << "Maximum error = " << error << '\n';
 
@@ -81,11 +85,12 @@ int main() {
     }
     
 
-    
-    
+    for (std::size_t i = 1; i < errors.size(); ++i) {
 
-    
+        double p_rate = std::log(errors[i-1] / errors[i]) / std::log(2.0);
 
+        std::cout << "Convergence rate between grid sizes " << grid_sizes[i-1] << " and " << grid_sizes[i] << ": " << p_rate << '\n';
+    }
     
 
     // for (int j = 0; j < u.ny(); ++j) {
