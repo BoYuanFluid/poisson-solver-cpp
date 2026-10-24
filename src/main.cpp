@@ -84,14 +84,31 @@ int main() {
 
     }
     
+    bool all_passed = true;
+
+    const double expected_order = 2.0;
+    const double order_tolerance = 0.1;
 
     for (std::size_t i = 1; i < errors.size(); ++i) {
 
         double p_rate = std::log(errors[i-1] / errors[i]) / std::log(2.0);
 
         std::cout << "Convergence rate between grid sizes " << grid_sizes[i-1] << " and " << grid_sizes[i] << ": " << p_rate << '\n';
+
+        bool test_passed = std::isfinite(p_rate) &&
+                std::abs(p_rate - expected_order) < order_tolerance;
+
+        if (!test_passed) {
+            all_passed = false;
+            std::cout << "Failure: Convergence rate is not within the expected range. Expected: " << expected_order << ", Actual: " << p_rate << '\n';
+        }
     }
     
+    if (all_passed) {
+        std::cout << "All numerical tests PASSED. \n";
+    } else {
+        std::cout << "Numerical tests FAILED. \n";
+    }
 
     // for (int j = 0; j < u.ny(); ++j) {
     //     for (int i = 0; i < u.nx(); ++i) {
@@ -115,7 +132,6 @@ int main() {
     //     std::cout << std::endl;
     // }
 
-    
 
-    return 0;
+    return all_passed ? 0 : 1;
 }
