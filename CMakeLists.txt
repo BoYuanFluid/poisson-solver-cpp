@@ -9,3 +9,10 @@ add_executable(poisson_solver
 )
 
 target_include_directories(poisson_solver PRIVATE include)
+
+enable_testing()
+
+add_test(
+    NAME poisson_grid_convergence
+    COMMAND poisson_solver
+)
